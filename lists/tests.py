@@ -33,3 +33,11 @@ class TestHomePage(TestCase):
         self.assertIn('<title>To-Do lists</title>', html)
         self.assertTrue(html.endswith('</html>'))
 
+    def test_can_save_post_request(self):
+        """
+        Form should post data back to root URL
+        """
+
+        response = self.client.post('/', data={'item_text': 'A new list item'})
+        self.assertIn('A new list item', response.content.decode())
+        self.assertTemplateUsed(response, 'home.html')
